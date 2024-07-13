@@ -1,5 +1,6 @@
 import type { Metadata } from 'next';
 import './globals.css';
+import { BpmfProvider } from './provider/BpmfProvider';
 
 export const metadata: Metadata = {
   title: "LET'S LEARN ㄅㄆㄇㄈ",
@@ -16,7 +17,7 @@ export default function RootLayout({
     <html lang="en" className="no-scrollbar min-h-screen">
       <body className="min-h-screen bg-white">
         <header className="sticky inset-x-0 top-0 h-16 w-full bg-teal-900 text-white"></header>
-        {children}
+        <BpmfProvider>{children}</BpmfProvider>
       </body>
     </html>
   );
