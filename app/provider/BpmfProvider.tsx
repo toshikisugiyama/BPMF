@@ -14,6 +14,7 @@ type TBpmf = {
   pinyin: string;
   isPinyinVisible: boolean;
   category: 'vowel' | 'consonant';
+  audioUrl: string | null;
 };
 
 export const BpmfContext = createContext<
@@ -32,6 +33,7 @@ export const BpmfProvider = (props: { children: ReactNode }) => {
       pinyin: 'b',
       isPinyinVisible: false,
       category: 'consonant',
+      audioUrl: null,
     },
     {
       id: '02',
@@ -39,6 +41,7 @@ export const BpmfProvider = (props: { children: ReactNode }) => {
       pinyin: 'p',
       isPinyinVisible: false,
       category: 'consonant',
+      audioUrl: null,
     },
     {
       id: '03',
@@ -46,6 +49,7 @@ export const BpmfProvider = (props: { children: ReactNode }) => {
       pinyin: 'm',
       isPinyinVisible: false,
       category: 'consonant',
+      audioUrl: null,
     },
     {
       id: '04',
@@ -53,6 +57,7 @@ export const BpmfProvider = (props: { children: ReactNode }) => {
       pinyin: 'f',
       isPinyinVisible: false,
       category: 'consonant',
+      audioUrl: null,
     },
     {
       id: '05',
@@ -60,6 +65,7 @@ export const BpmfProvider = (props: { children: ReactNode }) => {
       pinyin: 'd',
       isPinyinVisible: false,
       category: 'consonant',
+      audioUrl: null,
     },
     {
       id: '06',
@@ -67,6 +73,7 @@ export const BpmfProvider = (props: { children: ReactNode }) => {
       pinyin: 't',
       isPinyinVisible: false,
       category: 'consonant',
+      audioUrl: null,
     },
     {
       id: '07',
@@ -74,6 +81,7 @@ export const BpmfProvider = (props: { children: ReactNode }) => {
       pinyin: 'n',
       isPinyinVisible: false,
       category: 'consonant',
+      audioUrl: null,
     },
     {
       id: '08',
@@ -81,6 +89,7 @@ export const BpmfProvider = (props: { children: ReactNode }) => {
       pinyin: 'l',
       isPinyinVisible: false,
       category: 'consonant',
+      audioUrl: null,
     },
     {
       id: '09',
@@ -88,6 +97,7 @@ export const BpmfProvider = (props: { children: ReactNode }) => {
       pinyin: 'g',
       isPinyinVisible: false,
       category: 'consonant',
+      audioUrl: null,
     },
     {
       id: '10',
@@ -95,6 +105,7 @@ export const BpmfProvider = (props: { children: ReactNode }) => {
       pinyin: 'k',
       isPinyinVisible: false,
       category: 'consonant',
+      audioUrl: null,
     },
     {
       id: '11',
@@ -102,6 +113,7 @@ export const BpmfProvider = (props: { children: ReactNode }) => {
       pinyin: 'h',
       isPinyinVisible: false,
       category: 'consonant',
+      audioUrl: null,
     },
     {
       id: '12',
@@ -109,6 +121,7 @@ export const BpmfProvider = (props: { children: ReactNode }) => {
       pinyin: 'j',
       isPinyinVisible: false,
       category: 'consonant',
+      audioUrl: null,
     },
     {
       id: '13',
@@ -116,6 +129,7 @@ export const BpmfProvider = (props: { children: ReactNode }) => {
       pinyin: 'q',
       isPinyinVisible: false,
       category: 'consonant',
+      audioUrl: null,
     },
     {
       id: '14',
@@ -123,6 +137,7 @@ export const BpmfProvider = (props: { children: ReactNode }) => {
       pinyin: 'x',
       isPinyinVisible: false,
       category: 'consonant',
+      audioUrl: null,
     },
     {
       id: '15',
@@ -130,6 +145,7 @@ export const BpmfProvider = (props: { children: ReactNode }) => {
       pinyin: 'zh',
       isPinyinVisible: false,
       category: 'consonant',
+      audioUrl: null,
     },
     {
       id: '16',
@@ -137,6 +153,7 @@ export const BpmfProvider = (props: { children: ReactNode }) => {
       pinyin: 'ch',
       isPinyinVisible: false,
       category: 'consonant',
+      audioUrl: null,
     },
     {
       id: '17',
@@ -144,6 +161,7 @@ export const BpmfProvider = (props: { children: ReactNode }) => {
       pinyin: 'sh',
       isPinyinVisible: false,
       category: 'consonant',
+      audioUrl: null,
     },
     {
       id: '18',
@@ -151,6 +169,7 @@ export const BpmfProvider = (props: { children: ReactNode }) => {
       pinyin: 'r',
       isPinyinVisible: false,
       category: 'consonant',
+      audioUrl: null,
     },
     {
       id: '19',
@@ -158,6 +177,7 @@ export const BpmfProvider = (props: { children: ReactNode }) => {
       pinyin: 'z',
       isPinyinVisible: false,
       category: 'consonant',
+      audioUrl: null,
     },
     {
       id: '20',
@@ -165,6 +185,7 @@ export const BpmfProvider = (props: { children: ReactNode }) => {
       pinyin: 'c',
       isPinyinVisible: false,
       category: 'consonant',
+      audioUrl: null,
     },
     {
       id: '21',
@@ -172,6 +193,7 @@ export const BpmfProvider = (props: { children: ReactNode }) => {
       pinyin: 's',
       isPinyinVisible: false,
       category: 'consonant',
+      audioUrl: null,
     },
     {
       id: '22',
@@ -179,6 +201,7 @@ export const BpmfProvider = (props: { children: ReactNode }) => {
       pinyin: 'a',
       isPinyinVisible: false,
       category: 'vowel',
+      audioUrl: null,
     },
     {
       id: '23',
@@ -186,6 +209,7 @@ export const BpmfProvider = (props: { children: ReactNode }) => {
       pinyin: 'o',
       isPinyinVisible: false,
       category: 'vowel',
+      audioUrl: null,
     },
     {
       id: '24',
@@ -193,6 +217,7 @@ export const BpmfProvider = (props: { children: ReactNode }) => {
       pinyin: 'e',
       isPinyinVisible: false,
       category: 'vowel',
+      audioUrl: null,
     },
     {
       id: '25',
@@ -200,6 +225,7 @@ export const BpmfProvider = (props: { children: ReactNode }) => {
       pinyin: 'ê',
       isPinyinVisible: false,
       category: 'vowel',
+      audioUrl: null,
     },
     {
       id: '26',
@@ -207,6 +233,7 @@ export const BpmfProvider = (props: { children: ReactNode }) => {
       pinyin: 'ai',
       isPinyinVisible: false,
       category: 'vowel',
+      audioUrl: null,
     },
     {
       id: '27',
@@ -214,6 +241,7 @@ export const BpmfProvider = (props: { children: ReactNode }) => {
       pinyin: 'ei',
       isPinyinVisible: false,
       category: 'vowel',
+      audioUrl: null,
     },
     {
       id: '28',
@@ -221,6 +249,7 @@ export const BpmfProvider = (props: { children: ReactNode }) => {
       pinyin: 'ao',
       isPinyinVisible: false,
       category: 'vowel',
+      audioUrl: null,
     },
     {
       id: '29',
@@ -228,6 +257,7 @@ export const BpmfProvider = (props: { children: ReactNode }) => {
       pinyin: 'ou',
       isPinyinVisible: false,
       category: 'vowel',
+      audioUrl: null,
     },
     {
       id: '30',
@@ -235,6 +265,7 @@ export const BpmfProvider = (props: { children: ReactNode }) => {
       pinyin: 'an',
       isPinyinVisible: false,
       category: 'vowel',
+      audioUrl: null,
     },
     {
       id: '31',
@@ -242,6 +273,7 @@ export const BpmfProvider = (props: { children: ReactNode }) => {
       pinyin: 'en',
       isPinyinVisible: false,
       category: 'vowel',
+      audioUrl: null,
     },
     {
       id: '32',
@@ -249,6 +281,7 @@ export const BpmfProvider = (props: { children: ReactNode }) => {
       pinyin: 'ang',
       isPinyinVisible: false,
       category: 'vowel',
+      audioUrl: null,
     },
     {
       id: '33',
@@ -256,6 +289,7 @@ export const BpmfProvider = (props: { children: ReactNode }) => {
       pinyin: 'eng',
       isPinyinVisible: false,
       category: 'vowel',
+      audioUrl: null,
     },
     {
       id: '34',
@@ -263,6 +297,7 @@ export const BpmfProvider = (props: { children: ReactNode }) => {
       pinyin: 'er',
       isPinyinVisible: false,
       category: 'vowel',
+      audioUrl: null,
     },
     {
       id: '35',
@@ -270,6 +305,7 @@ export const BpmfProvider = (props: { children: ReactNode }) => {
       pinyin: 'i/y',
       isPinyinVisible: false,
       category: 'vowel',
+      audioUrl: null,
     },
     {
       id: '36',
@@ -277,6 +313,7 @@ export const BpmfProvider = (props: { children: ReactNode }) => {
       pinyin: 'u/w',
       isPinyinVisible: false,
       category: 'vowel',
+      audioUrl: null,
     },
     {
       id: '37',
@@ -284,6 +321,7 @@ export const BpmfProvider = (props: { children: ReactNode }) => {
       pinyin: 'ü/yu',
       isPinyinVisible: false,
       category: 'vowel',
+      audioUrl: null,
     },
     {
       id: '38',
@@ -291,6 +329,7 @@ export const BpmfProvider = (props: { children: ReactNode }) => {
       pinyin: '-i',
       isPinyinVisible: false,
       category: 'vowel',
+      audioUrl: null,
     },
   ]);
 

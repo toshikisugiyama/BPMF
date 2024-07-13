@@ -1,12 +1,21 @@
 'use client';
 
-import { useCallback, useContext, useState } from 'react';
+import {
+  memo,
+  MouseEvent,
+  MouseEventHandler,
+  useCallback,
+  useContext,
+  useState,
+} from 'react';
 import { BpmfContext } from './provider/BpmfProvider';
 
 export default function Home() {
   const bpmfContext = useContext(BpmfContext);
   const [isScrolling, setIsScrolling] = useState<boolean>(false);
   const [scrollTimeout, setScrollTimeout] = useState<number | null>(null);
+
+  // カードをスクロール
   const handleScroll = useCallback(() => {
     setIsScrolling(true);
     bpmfContext?.setBpmf((prevBpmf) =>
@@ -24,6 +33,7 @@ export default function Home() {
     setScrollTimeout(timeout);
   }, [scrollTimeout, bpmfContext]);
 
+  // カードをクリック
   const handleClickCard = useCallback(
     (itemId: string) => {
       if (isScrolling) {
@@ -44,6 +54,19 @@ export default function Home() {
     [isScrolling, bpmfContext]
   );
 
+  // 音声アイコンをクリック
+  const handleClickAudio = useCallback(
+    (e: MouseEvent<HTMLDivElement, globalThis.MouseEvent>) => {
+      e.stopPropagation();
+      const audio = e.currentTarget.querySelector('audio');
+      if (audio == null) {
+        return;
+      }
+      audio.play();
+    },
+    []
+  );
+
   return (
     <main>
       <div className="mx-auto max-w-2xl p-4">
@@ -54,7 +77,7 @@ export default function Home() {
           {bpmfContext?.bpmf.map((item, index) => (
             <li
               key={item.id}
-              className="relative flex aspect-square w-full shrink-0 select-none snap-center snap-always flex-col items-center justify-center gap-4 rounded-2xl bg-teal-900 font-serif text-[15rem] font-semibold leading-none text-white"
+              className="relative flex aspect-square w-full shrink-0 select-none snap-center snap-always flex-col items-center justify-center gap-4 rounded-2xl bg-teal-900 font-serif text-[15rem] font-semibold leading-none text-white shadow"
               onClick={() => handleClickCard(item.id)}
             >
               {item.bpmf}
@@ -66,6 +89,10 @@ export default function Home() {
                   {item.pinyin}
                 </span>
               )}
+              <Audio
+                handleClickAudio={handleClickAudio}
+                audioUrl={item.audioUrl}
+              />
             </li>
           ))}
         </ul>
@@ -73,3 +100,28 @@ export default function Home() {
     </main>
   );
 }
+
+const Audio = memo(function AudioIcon(props: {
+  handleClickAudio: MouseEventHandler<HTMLDivElement>;
+  audioUrl: string | null;
+}) {
+  return (
+    <div
+      className="absolute right-[14%] top-[14%] -translate-y-1/2 translate-x-1/2 cursor-pointer"
+      onClick={props.handleClickAudio}
+    >
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        viewBox="0 0 24 24"
+        fill="currentColor"
+        className="size-6"
+      >
+        <path d="M13.5 4.06c0-1.336-1.616-2.005-2.56-1.06l-4.5 4.5H4.508c-1.141 0-2.318.664-2.66 1.905A9.76 9.76 0 0 0 1.5 12c0 .898.121 1.768.35 2.595.341 1.24 1.518 1.905 2.659 1.905h1.93l4.5 4.5c.945.945 2.561.276 2.561-1.06V4.06ZM18.584 5.106a.75.75 0 0 1 1.06 0c3.808 3.807 3.808 9.98 0 13.788a.75.75 0 0 1-1.06-1.06 8.25 8.25 0 0 0 0-11.668.75.75 0 0 1 0-1.06Z" />
+        <path d="M15.932 7.757a.75.75 0 0 1 1.061 0 6 6 0 0 1 0 8.486.75.75 0 0 1-1.06-1.061 4.5 4.5 0 0 0 0-6.364.75.75 0 0 1 0-1.06Z" />
+      </svg>
+      <audio controls={false}>
+        <source src={props.audioUrl ?? 't-rex-roar.mp3'} type="audio/mpeg" />
+      </audio>
+    </div>
+  );
+});

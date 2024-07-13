@@ -16,7 +16,7 @@ export default function RootLayout({
   return (
     <html lang="en" className="no-scrollbar min-h-screen">
       <body className="min-h-screen bg-white">
-        <header className="sticky inset-x-0 top-0 h-16 w-full bg-teal-900 text-white"></header>
+        <header className="sticky top-0 h-16 w-full bg-teal-900 text-white shadow"></header>
         <BpmfProvider>{children}</BpmfProvider>
       </body>
     </html>
