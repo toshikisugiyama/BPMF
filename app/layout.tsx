@@ -1,8 +1,5 @@
 import type { Metadata } from 'next';
-import { Inter } from 'next/font/google';
 import './globals.css';
-
-const inter = Inter({ subsets: ['latin'] });
 
 export const metadata: Metadata = {
   title: "LET'S LEARN ㄅㄆㄇㄈ",
@@ -16,9 +13,9 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className="no-scrollbar">
-      <body className={inter.className}>
-        <header className="sticky inset-x-0 top-0 h-14 w-full bg-cyan-900 text-white"></header>
+    <html lang="en" className="no-scrollbar min-h-screen">
+      <body className="min-h-screen bg-white dark:bg-white">
+        <header className="sticky inset-x-0 top-0 h-16 w-full bg-cyan-900 text-white"></header>
         {children}
       </body>
     </html>

@@ -1,3 +1,4 @@
+'use client';
 export default function Home() {
   type TItem = {
     id: string;
@@ -50,11 +51,11 @@ export default function Home() {
   return (
     <main>
       <div className="mx-auto max-w-2xl p-4">
-        <ul className="no-scrollbar flex aspect-square w-full snap-x snap-mandatory items-start justify-start gap-2 overflow-auto">
+        <ul className="no-scrollbar flex aspect-square w-full snap-x snap-mandatory items-start justify-start gap-4 overflow-auto scroll-smooth">
           {list.map((item, index) => (
             <li
               key={item.id}
-              className="relative flex aspect-square w-full shrink-0 snap-center flex-col items-center justify-center gap-4 rounded-2xl bg-cyan-900 font-serif text-[15rem] font-semibold leading-none text-white"
+              className="relative flex aspect-square w-full shrink-0 select-none snap-center snap-always flex-col items-center justify-center gap-4 rounded-2xl bg-cyan-900 font-serif text-[15rem] font-semibold leading-none text-white"
             >
               {item.bpmf}
               <span className="absolute left-[15%] top-[14%] -translate-x-1/2 -translate-y-1/2 text-2xl font-normal">
