@@ -6,19 +6,28 @@ import {
   MouseEventHandler,
   useCallback,
   useContext,
+  useEffect,
+  useMemo,
+  useRef,
   useState,
 } from 'react';
+import { useRouter, useSearchParams } from 'next/navigation';
 import { BpmfContext } from './provider/BpmfProvider';
+import { BPMF_DATA } from '@/data';
 
 export default function Home() {
+  const searchParams = useSearchParams();
+  const router = useRouter();
+  const id = searchParams.get('id');
   const bpmfContext = useContext(BpmfContext);
+  const containerRef = useRef<HTMLUListElement | null>(null);
   const [isScrolling, setIsScrolling] = useState<boolean>(false);
   const [scrollTimeout, setScrollTimeout] = useState<number | null>(null);
 
   // カードをスクロール
   const handleScroll = useCallback(() => {
     setIsScrolling(true);
-    bpmfContext?.setBpmf((prevBpmf) =>
+    bpmfContext?.setBpmfState((prevBpmf) =>
       prevBpmf.map((item) => ({
         ...item,
         isPinyinVisible: false,
@@ -29,7 +38,7 @@ export default function Home() {
     }
     const timeout = window.setTimeout(() => {
       setIsScrolling(false);
-    }, 100);
+    }, 10);
     setScrollTimeout(timeout);
   }, [scrollTimeout, bpmfContext]);
 
@@ -39,7 +48,7 @@ export default function Home() {
       if (isScrolling) {
         return;
       }
-      bpmfContext?.setBpmf((prevBpmf) =>
+      bpmfContext?.setBpmfState((prevBpmf) =>
         prevBpmf.map((prevItem) => {
           if (itemId === prevItem.id) {
             return {
@@ -67,35 +76,120 @@ export default function Home() {
     []
   );
 
+  useEffect(() => {
+    if (isScrolling) {
+      return;
+    }
+    const container = containerRef.current;
+    if (container == null) {
+      return;
+    }
+    let observer: IntersectionObserver | undefined;
+    const handleIntersection = (entries: IntersectionObserverEntry[]) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          const visibleItem = entry.target as HTMLElement;
+          const newId = visibleItem.id;
+          router.replace(`${window.location.pathname}?id=${newId}`);
+        }
+      });
+    };
+    observer = new IntersectionObserver(handleIntersection, {
+      root: container,
+      threshold: 1,
+    });
+    const items = container.querySelectorAll('li');
+    items.forEach((item) => observer!.observe(item));
+    return () => {
+      if (observer) {
+        items.forEach((item) => observer.unobserve(item));
+        observer.disconnect();
+      }
+    };
+  }, [isScrolling, router]);
+
+  const currentItems = useMemo(
+    () => BPMF_DATA.find((data) => data.id === id)?.items,
+    [id]
+  );
+
+  const ignore = useRef<boolean>(false);
+  useEffect(() => {
+    if (ignore.current) {
+      return;
+    }
+    if (id == null) {
+      router.replace(`${window.location.pathname}?id=01`);
+      return;
+    }
+    if (containerRef.current == null) {
+      return;
+    }
+    const item: HTMLLIElement | null = containerRef.current.querySelector(id);
+    if (item == null) {
+      return;
+    }
+    const itemLeft = item.offsetLeft - item.offsetWidth;
+    containerRef.current.scrollTo({
+      left: itemLeft,
+    });
+    return () => {
+      ignore.current = true;
+    };
+  }, [id, router]);
+
   return (
     <main>
-      <div className="mx-auto max-w-2xl p-4">
+      <div className="mx-auto flex max-w-2xl flex-col gap-4 p-4">
         <ul
+          ref={containerRef}
           className="no-scrollbar flex aspect-square w-full snap-x snap-mandatory items-start justify-start gap-4 overflow-auto"
           onScroll={handleScroll}
         >
-          {bpmfContext?.bpmf.map((item, index) => (
-            <li
-              key={item.id}
-              className="relative flex aspect-square w-full shrink-0 select-none snap-center snap-always flex-col items-center justify-center gap-4 rounded-2xl bg-teal-900 font-serif text-[15rem] font-semibold leading-none text-white shadow"
-              onClick={() => handleClickCard(item.id)}
-            >
-              {item.bpmf}
-              <span className="absolute left-[15%] top-[14%] -translate-x-1/2 -translate-y-1/2 text-2xl font-normal">
-                No.{index + 1}
-              </span>
-              {item.isPinyinVisible && (
-                <span className="absolute bottom-[15%] left-1/2 -translate-x-1/2 translate-y-1/2 text-2xl">
-                  {item.pinyin}
+          {bpmfContext?.bpmfState.map((item, index) => {
+            const data = BPMF_DATA.find(({ id }) => id === item.id);
+            if (data == null) {
+              return null;
+            }
+            return (
+              <li
+                id={data.id}
+                key={data.id}
+                className="relative flex aspect-square w-full shrink-0 select-none snap-center snap-always flex-col items-center justify-center gap-4 rounded-2xl bg-teal-900 font-serif text-[15rem] font-semibold leading-none text-white shadow"
+                onClick={() => handleClickCard(data.id)}
+              >
+                {data.bpmf}
+                <span className="absolute left-[15%] top-[14%] -translate-x-1/2 -translate-y-1/2 text-2xl font-normal">
+                  No.{index + 1}
                 </span>
-              )}
-              <Audio
-                handleClickAudio={handleClickAudio}
-                audioUrl={item.audioUrl}
-              />
-            </li>
-          ))}
+                {item.isPinyinVisible && (
+                  <span className="absolute bottom-[15%] left-1/2 -translate-x-1/2 translate-y-1/2 text-2xl">
+                    {data.pinyin}
+                  </span>
+                )}
+                <Audio
+                  handleClickAudio={handleClickAudio}
+                  audioUrl={data.audioUrl}
+                />
+              </li>
+            );
+          })}
         </ul>
+        {!!currentItems?.length && (
+          <ul className="grid grid-cols-3 gap-2">
+            {currentItems.map((item) => (
+              <li
+                key={item.id}
+                id={item.id}
+                className="flex aspect-square flex-col items-center justify-center gap-2 rounded-2xl bg-teal-900 text-white"
+              >
+                <span>{item.bpmf}</span>
+                <span className="text-3xl font-semibold">{item.label}</span>
+                <span>{item.pinyin}</span>
+              </li>
+            ))}
+          </ul>
+        )}
       </div>
     </main>
   );
