@@ -5,6 +5,8 @@ export const BPMF_28 = {
   label: 'ㄠ',
   bpmf: 'ㄠ',
   pinyin: 'ao',
+  ja: null,
+  en: null,
   category: 'vowel',
   audioUrl: null,
   items: [

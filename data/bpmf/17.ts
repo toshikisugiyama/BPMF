@@ -5,6 +5,8 @@ export const BPMF_17 = {
   label: 'ㄕ',
   bpmf: 'ㄕ',
   pinyin: 'sh',
+  ja: null,
+  en: null,
   category: 'consonant',
   audioUrl: null,
   items: [

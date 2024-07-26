@@ -27,6 +27,7 @@ export default function Home() {
   // カードをスクロール
   const handleScroll = useCallback(() => {
     setIsScrolling(true);
+    setCurrentItemId(undefined);
     bpmfContext?.setBpmfState((prevBpmf) =>
       prevBpmf.map((item) => ({
         ...item,
@@ -113,6 +114,14 @@ export default function Home() {
     [id]
   );
 
+  const [currentItemId, setCurrentItemId] = useState<string | undefined>(
+    undefined
+  );
+  const currentItem = useMemo(
+    () => currentData?.items.find(({ id }) => id === currentItemId),
+    [currentItemId, currentData]
+  );
+
   const ignore = useRef<boolean>(false);
   useEffect(() => {
     if (ignore.current) {
@@ -181,7 +190,8 @@ export default function Home() {
               <li
                 key={item.id}
                 id={item.id}
-                className="relative flex aspect-square flex-col items-center justify-center gap-2 rounded-2xl bg-teal-900 text-white"
+                className="relative flex aspect-square flex-col items-center justify-center gap-2 rounded-2xl bg-teal-900 text-white shadow"
+                onClick={() => setCurrentItemId(item.id)}
               >
                 <span className="text-3xl font-semibold">{item.label}</span>
                 <span className="absolute	left-1/2 top-[20%] -translate-x-1/2 -translate-y-1/2 whitespace-nowrap text-sm md:top-[30%]">
@@ -196,6 +206,15 @@ export default function Home() {
               </li>
             ))}
           </ul>
+        )}
+        {currentItem != null && (
+          <div
+            className="flex flex-col items-center justify-center rounded-2xl bg-teal-900 p-4 text-white shadow"
+            onClick={() => setCurrentItemId(undefined)}
+          >
+            <span>{currentItem.en ?? ''}</span>
+            <span>{currentItem.ja ?? ''}</span>
+          </div>
         )}
       </div>
     </main>

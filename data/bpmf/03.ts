@@ -5,6 +5,8 @@ export const BPMF_03 = {
   label: 'ㄇ',
   bpmf: 'ㄇ',
   pinyin: 'm',
+  ja: null,
+  en: null,
   category: 'consonant',
   audioUrl: null,
   items: [
@@ -23,7 +25,7 @@ export const BPMF_03 = {
       label: '門',
       bpmf: 'ㄇㄣˊ',
       pinyin: 'mén',
-      ja: '門',
+      ja: '門、ドア、扉',
       en: 'door',
       audioUrl: null,
       items: null,

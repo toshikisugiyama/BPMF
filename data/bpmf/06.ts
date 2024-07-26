@@ -5,6 +5,8 @@ export const BPMF_06 = {
   label: 'ㄊ',
   bpmf: 'ㄊ',
   pinyin: 't',
+  ja: null,
+  en: null,
   category: 'consonant',
   audioUrl: null,
   items: [

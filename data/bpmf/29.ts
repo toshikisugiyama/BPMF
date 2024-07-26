@@ -5,6 +5,8 @@ export const BPMF_29 = {
   label: 'ㄡ',
   bpmf: 'ㄡ',
   pinyin: 'ou',
+  ja: null,
+  en: null,
   category: 'vowel',
   audioUrl: null,
   items: [
