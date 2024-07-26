@@ -108,8 +108,8 @@ export default function Home() {
     };
   }, [isScrolling, router]);
 
-  const currentItems = useMemo(
-    () => BPMF_DATA.find((data) => data.id === id)?.items,
+  const currentData = useMemo(
+    () => BPMF_DATA.find((data) => data.id === id),
     [id]
   );
 
@@ -119,7 +119,7 @@ export default function Home() {
       return;
     }
     if (id == null) {
-      router.replace(`${window.location.pathname}?id=01`);
+      router.replace(`${window.location.pathname}?id=bpmf-01`);
       return;
     }
     if (containerRef.current == null) {
@@ -175,17 +175,24 @@ export default function Home() {
             );
           })}
         </ul>
-        {!!currentItems?.length && (
+        {!!currentData?.items?.length && (
           <ul className="grid grid-cols-3 gap-2">
-            {currentItems.map((item) => (
+            {currentData.items.map((item) => (
               <li
                 key={item.id}
                 id={item.id}
-                className="flex aspect-square flex-col items-center justify-center gap-2 rounded-2xl bg-teal-900 text-white"
+                className="relative flex aspect-square flex-col items-center justify-center gap-2 rounded-2xl bg-teal-900 text-white"
               >
-                <span>{item.bpmf}</span>
                 <span className="text-3xl font-semibold">{item.label}</span>
-                <span>{item.pinyin}</span>
+                <span className="absolute	left-1/2 top-[20%] -translate-x-1/2 -translate-y-1/2 whitespace-nowrap text-sm md:top-[30%]">
+                  {item.bpmf}
+                </span>
+                {bpmfContext?.bpmfState.find((state) => state.id === id)
+                  ?.isPinyinVisible && (
+                  <span className="absolute bottom-[20%] left-1/2 -translate-x-1/2 translate-y-1/2 whitespace-nowrap text-sm md:bottom-[30%]">
+                    {item.pinyin}
+                  </span>
+                )}
               </li>
             ))}
           </ul>
