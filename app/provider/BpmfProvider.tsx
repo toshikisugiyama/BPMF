@@ -16,6 +16,8 @@ export type TBpmfData = {
   pinyin: string;
   category?: 'vowel' | 'consonant';
   audioUrl: string | null;
+  ja?: string | null;
+  en?: string | null;
   items: TBpmfData[] | null;
 };
 
